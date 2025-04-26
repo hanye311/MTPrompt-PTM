@@ -5,7 +5,7 @@ This is the official implementation of MTPrompt-PTM. MTPrompt-PTM is a multi-tas
 The PTM sites includes Phosphorylation (S, T, Y), N-linked Glycosylation (N), O-linked Glycosylation (S, T), Ubiquitination (K), Acetylation (K), Methylation (K, R), SUMOylation (K), Succinylation (K), and Palmitoylation (C).
 
 <h2>Architecture</h2>
-
+<img width="396" alt="image" src="https://github.com/user-attachments/assets/366895f5-5658-49a2-b779-6adcc91675d9" />
 <h2>Installation</h2>
 
 To use S-PLM project, install the corresponding environment.yaml file in your environment. Or you can follow the install.sh file to install the dependencies.
