@@ -29,3 +29,5 @@ Then, run the following command to install the required packages inside the cond
 bash install.sh
 
 <h2>Run</h2>
+
+<code>python test.py --config_path PTM_config_adapterH_prompt_test.yaml --model_path best_model_13ptm_final.pth --data_path Phosphorylation_S_sequence.fasta --PTM_type Phosphorylation_S</code>
