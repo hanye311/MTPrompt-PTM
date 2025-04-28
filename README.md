@@ -28,6 +28,8 @@ Then, run the following command to install the required packages inside the cond
 
 <code>bash install.sh</code>
 
-<h2>Run</h2>
+<h2>Inference</h2>
+
+To inference, you need to input PTM type and protein sequence.
 
 <code>python test.py --config_path PTM_config_adapterH_prompt_test.yaml --model_path best_model_13ptm_final.pth --data_path Phosphorylation_S_sequence.fasta --PTM_type Phosphorylation_S</code>
