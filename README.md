@@ -5,7 +5,7 @@ This is the official implementation of MTPrompt-PTM. MTPrompt-PTM is a multi-tas
 The PTM sites includes Phosphorylation (S, T, Y), N-linked Glycosylation (N), O-linked Glycosylation (S, T), Ubiquitination (K), Acetylation (K), Methylation (K, R), SUMOylation (K), Succinylation (K), and Palmitoylation (C).
 
 <h2>Architecture</h2>
-<img width="500" alt="image" src="https://github.com/hanye311/MTPrompt-PTM/blob/main/Architecture.jpg" />
+<img width="800" alt="image" src="https://github.com/hanye311/MTPrompt-PTM/blob/main/Architecture.jpg" />
 
 <h2>Installation</h2>
 
