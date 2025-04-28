@@ -22,11 +22,11 @@ Using environment.yaml
 
 Create a conda environment and use this command to install the required packages inside the conda environment. First, make the install.sh file executable by running the following command:
 
-chmod +x install.sh
+<code>chmod +x install.sh</code>
 
 Then, run the following command to install the required packages inside the conda environment:
 
-bash install.sh
+<code>bash install.sh</code>
 
 <h2>Run</h2>
 
