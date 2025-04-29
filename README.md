@@ -33,11 +33,12 @@ bash install.sh
 
 <h2>Inference</h2>
 
-To predict PTM site by our model, you need to input PTM type and protein sequence. 
+To predict PTM sites using our model, you need to provide the PTM type and the corresponding protein sequence.
 
-The optional PTM type is as followed: Phosphorylation_S, Phosphorylation_T, Phosphorylation_Y, Ubiquitination_K, Acetylation_K, OlinkedGlycosylation_S, Methylation_R, NlinkedGlycosylation_N, OlinkedGlycosylation_T, Methylation_K, Palmitoylation_C, Sumoylation_K and Succinylation_K.
+The available PTM types are as follows: 
+Phosphorylation_S, Phosphorylation_T, Phosphorylation_Y, Ubiquitination_K, Acetylation_K, OlinkedGlycosylation_S, Methylation_R, NlinkedGlycosylation_N, OlinkedGlycosylation_T, Methylation_K, Palmitoylation_C, Sumoylation_K and Succinylation_K.
 
-The protein sequence need to be saved in a fasta file.
+The protein sequence must be saved in a FASTA file format.
 
 The model can be downloaded from: [MTPrompt-PTM](https://www.python.org).
 
