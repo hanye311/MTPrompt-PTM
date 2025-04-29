@@ -38,6 +38,6 @@ The protein sequence need to be saved in a fasta file.
 
 The model can be downloaded from: 
 
-<code>python test.py --config_path PTM_config_prompt_tuning_test.yaml --model_path best_model_13ptm_final.pth --data_path Phosphorylation_S_sequence.fasta --PTM_type Phosphorylation_S</code>
+<code>python test.py --config_path config/PTM_config_prompt_tuning_test.yaml --model_path best_model_13ptm_final.pth --data_path data/Phosphorylation_S_sequence.fasta --PTM_type Phosphorylation_S --save_path data</code>
 
 The result will be saved in a csv file.
