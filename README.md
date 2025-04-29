@@ -32,7 +32,7 @@ Then, run the following command to install the required packages inside the cond
 
 To predict PTM site by our model, you need to input PTM type and protein sequence. 
 
-The optional PTM type is as followed: Phosphorylation_S,Phosphorylation_T,Phosphorylation_Y,Ubiquitination_K,Acetylation_K,OlinkedGlycosylation_S,Methylation_R,NlinkedGlycosylation_N,OlinkedGlycosylation_T,Methylation_K,Palmitoylation_C,Sumoylation_K and Succinylation_K.
+The optional PTM type is as followed: Phosphorylation_S, Phosphorylation_T, Phosphorylation_Y, Ubiquitination_K, Acetylation_K, OlinkedGlycosylation_S, Methylation_R, NlinkedGlycosylation_N, OlinkedGlycosylation_T, Methylation_K, Palmitoylation_C, Sumoylation_K and Succinylation_K.
 
 The protein sequence need to be saved in a fasta file.
 
