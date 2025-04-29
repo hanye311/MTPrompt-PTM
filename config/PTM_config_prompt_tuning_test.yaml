@@ -1,0 +1,84 @@
+fix_seed: 0
+
+encoder:
+  model_name: facebook/esm2_t33_650M_UR50D
+  max_len: 1024
+  tune_embedding: False
+  adapter_h:
+    enable: True
+    num_end_adapter_layers: [12]
+    module_type: "MLP1"
+    freeze_adapter_layers: [True]
+  fine_tune:
+    enable: False
+    last_layers_trainable: 2
+    freeze_adapter_layers: [False]
+  lora:
+    enable: False
+    r: 2
+    lora_alpha: 8
+    lora_dropout: 0.05
+    esm_num_end_lora: 33
+  prompt:
+    enable: True
+    prompt_addition_enable: False
+    prompt_predefined_enable: True
+    prompt_len: 500
+    prompt_layer_indices: [0]
+    num_tasks: 13
+    task_token_path: ./esm_adapterH/task_prompts
+    if_pass_to_MHA: False
+    if_attention_masks: False
+    if_weighted_skip_connection: False
+    if_grads: True
+  input_type: protein_sequence
+  num_classes: 2
+
+projector:
+  projector_type: CNN
+  droprate: 0.75
+  kernel_sizes: [1,9,11]
+  out_channels: 200
+  output_dim: 2
+  inner_linear_dim: 128
+  num_layers: 2
+  mhc_number: 2
+  if_multihead: True
+
+test_settings:
+  batch_size: 1
+  device: cuda
+  num_workers: 0
+
+tasks:
+  Phosphorylation_S: True
+  Phosphorylation_T: True
+  Phosphorylation_Y: True
+  Ubiquitination_K: True
+  Acetylation_K: True
+  OlinkedGlycosylation_S: True
+  Methylation_R: True
+  NlinkedGlycosylation_N: True
+  OlinkedGlycosylation_T: True
+  Methylation_K: True
+  Palmitoylation_C: True
+  Sumoylation_K: True
+  Succinylation_K: True
+
+task_ids:
+  Phosphorylation_S: 0
+  Phosphorylation_T: 1
+  Phosphorylation_Y: 2
+  Ubiquitination_K: 3
+  Acetylation_K: 4
+  OlinkedGlycosylation_S: 5
+  Methylation_R: 6
+  NlinkedGlycosylation_N: 7
+  OlinkedGlycosylation_T: 8
+  Methylation_K: 9
+  Palmitoylation_C: 10
+  Sumoylation_K: 11
+  Succinylation_K: 12
+
+
+
