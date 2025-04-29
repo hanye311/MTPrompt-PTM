@@ -30,6 +30,7 @@ Then, run the following command to install the required packages inside the cond
 
 <h2>Inference</h2>
 
-To inference, you need to input PTM type and protein sequence.
+To inference, you need to input PTM type and protein sequence. The parameter of PTM_type is as follows: Phosphorylation_S,Phosphorylation_T,Phosphorylation_Y,Ubiquitination_K,Acetylation_K,OlinkedGlycosylation_S,Methylation_R,NlinkedGlycosylation_N,OlinkedGlycosylation_T,Methylation_K,Palmitoylation_C,Sumoylation_K and Succinylation_K.
+The protein sequence can be saved in a fasta file.
 
 <code>python test.py --config_path PTM_config_adapterH_prompt_test.yaml --model_path best_model_13ptm_final.pth --data_path Phosphorylation_S_sequence.fasta --PTM_type Phosphorylation_S</code>
