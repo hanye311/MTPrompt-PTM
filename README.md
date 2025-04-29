@@ -27,7 +27,9 @@ chmod +x install.sh
 ```
 Then, run the following command to install the required packages inside the conda environment:
 
-<code>bash install.sh</code>
+```bash
+bash install.sh
+```
 
 <h2>Inference</h2>
 
@@ -43,3 +45,4 @@ The result will be saved in a csv file.
 
 ```bash
 python test.py --config_path config/PTM_config_prompt_tuning_test.yaml --model_path best_model_13ptm_final.pth --data_path data/Phosphorylation_S_sequence.fasta --PTM_type Phosphorylation_S --save_path data
+```
