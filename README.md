@@ -9,7 +9,7 @@ The PTM sites includes Phosphorylation (S, T, Y), N-linked Glycosylation (N), O-
 
 <h2>Installation</h2>
 
-To use S-PLM project, install the corresponding <code>environment.yaml</code> file in your environment. Or you can follow the <code>install.sh</code> file to install the dependencies.
+To use MTPrompt-PTM project, install the corresponding <code>environment.yaml</code> file in your environment. Or you can follow the <code>install.sh</code> file to install the dependencies.
 
 <h3>Install using yaml file</h3>
 
@@ -20,7 +20,7 @@ Using <code>environment.yaml</code>
 
 <h3>Install using SH file</h3>
 
-Create a conda environment and use this command to install the required packages inside the conda environment. First, make the install.sh file executable by running the following command:
+Create a conda environment and use this command to install the required packages inside the conda environment. First, make the <code>install.sh</code> file executable by running the following command:
 
 ```bash
 chmod +x install.sh
@@ -41,8 +41,6 @@ Phosphorylation_S, Phosphorylation_T, Phosphorylation_Y, Ubiquitination_K, Acety
 The protein sequence must be saved in a FASTA file format.
 
 The model can be downloaded from: [MTPrompt-PTM](https://mailmissouri-my.sharepoint.com/:u:/g/personal/yhhdb_umsystem_edu/EeDvZmGms2dJkOW_ob_0MOcBXvFhm5evkAYgz3shfNAheA?e=vtMAJg).
-
-
 
 The result will be saved in a csv file.
 
