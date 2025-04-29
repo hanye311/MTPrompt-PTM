@@ -40,7 +40,9 @@ Phosphorylation_S, Phosphorylation_T, Phosphorylation_Y, Ubiquitination_K, Acety
 
 The protein sequence must be saved in a FASTA file format.
 
-The model can be downloaded from: [MTPrompt-PTM](https://www.python.org).
+The model can be downloaded from: [MTPrompt-PTM](https://mailmissouri-my.sharepoint.com/:u:/g/personal/yhhdb_umsystem_edu/EeDvZmGms2dJkOW_ob_0MOcBXvFhm5evkAYgz3shfNAheA?e=vtMAJg).
+
+
 
 The result will be saved in a csv file.
 
