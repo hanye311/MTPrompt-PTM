@@ -24,7 +24,7 @@ Create a conda environment and use this command to install the required packages
 
 ```bash
 chmod +x install.sh
-```bash
+```
 Then, run the following command to install the required packages inside the conda environment:
 
 <code>bash install.sh</code>
