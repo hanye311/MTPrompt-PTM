@@ -9,7 +9,7 @@ The PTM sites includes Phosphorylation (S, T, Y), N-linked Glycosylation (N), O-
 
 <h2>Installation</h2>
 
-To use S-PLM project, install the corresponding environment.yaml file in your environment. Or you can follow the install.sh file to install the dependencies.
+To use S-PLM project, install the corresponding <code>environment.yaml</code> file in your environment. Or you can follow the <code>install.sh</code> file to install the dependencies.
 
 <h3>Install using yaml file</h3>
 
