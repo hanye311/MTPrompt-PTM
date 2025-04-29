@@ -16,7 +16,7 @@ To use S-PLM project, install the corresponding <code>environment.yaml</code> fi
 Using <code>environment.yaml</code>
 
 1. Create a new environment using the environment.yaml file: <code>conda env create -f environment.yaml</code>.
-2. Activate the environment you have just created: <code>conda activate splm</code>.
+2. Activate the environment you have just created: <code>conda activate mtprompt</code>.
 
 <h3>Install using SH file</h3>
 
