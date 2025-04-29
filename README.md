@@ -36,9 +36,9 @@ The optional PTM type is as followed: Phosphorylation_S, Phosphorylation_T, Phos
 
 The protein sequence need to be saved in a fasta file.
 
-The model can be downloaded from: 
+The model can be downloaded from: [MTPrompt-PTM](https://www.python.org).
 
 The result will be saved in a csv file.
 
 ```bash
-<code>python test.py --config_path config/PTM_config_prompt_tuning_test.yaml --model_path best_model_13ptm_final.pth --data_path data/Phosphorylation_S_sequence.fasta --PTM_type Phosphorylation_S --save_path data</code>
+python test.py --config_path config/PTM_config_prompt_tuning_test.yaml --model_path best_model_13ptm_final.pth --data_path data/Phosphorylation_S_sequence.fasta --PTM_type Phosphorylation_S --save_path data
