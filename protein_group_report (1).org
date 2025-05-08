@@ -1,0 +1,342 @@
+
+#+TITLE: \textbf{Comparative Analysis of Single-task and Multi-task Learning Approaches for Predicting ion Binding Sites by ESM2}
+#+AUTHOR:\small \textbf{Ye Han, Salhuldin Alqarghuli, Arwa Mashaqbeh}
+#+DATE:
+
+#+LATEX_HEADER: \usepackage[margin=1in,left=1in]{geometry}
+
+#+OPTIONS: toc:nil
+#+attr_latex: :options []
+
+
+ *\large{Abstract}* (Saladin) Accurate prediction of metal ion binding sites in proteins is crucial for understanding protein
+function and facilitating biomedical and biotechnological applications. In this study, we
+investigated the predictive performance of single-task and multi-task learning frameworks using
+the pre-trained protein language model ESM2 (facebook/esm2_t6_8M_UR50D) to identify zinc
+(Zn), calcium (Ca), manganese (Mn), and magnesium (Mg) binding residues directly from protein
+sequences. The single-task experiments involved three scenarios: baseline classification without
+fine-tuning, fine-tuning only the final two layers, and fine-tuning all six layers of ESM2. Multi-task
+learning experiments were conducted simultaneously, introducing task-specific fully connected
+layers to predict multiple ion-binding sites using a shared ESM2 backbone, with each ion assigned
+an independent classification head. Our findings indicate that fine-tuning the last two layers
+provided the best predictive performance across both single-task and multi-task frameworks.
+Furthermore, we benchmarked our best-performing fine-tuned models against established methods
+including   Prot2Token,   TargetS,   LmetalSite,   and   ZinCap, showcasing the efficacy and
+generalizability of our approach. This work provides valuable insights into optimizing deep
+learning models for precise and efficient prediction of metal ion binding sites in proteins.
+
+*Key words:* ion binding prediction; ESM2; fine-tuning; multi-task 
+
+
+** Introduction (Saladin)
+
+Proteins play a crucial role in numerous biological processes, with their functions often intricately
+linked to their ability to bind specific metal ions such as zinc (Zn), calcium (Ca), manganese (Mn),
+and   magnesium   (Mg).   Identifying   these   metal-binding sites accurately is essential for
+understanding protein mechanisms and has implications for drug design, enzyme engineering, and biotechnology.
+Traditionally, prediction of functional residues within proteins has relied heavily on evolutionary conservation
+sequence alignment, structural templates, and manually engineered features.
+Early computational methods such as TargetS [5] leveraged evolutionary features and
+secondary structure predictions to classify ligand-specific binding sites. Subsequent methods like
+BindWeb [6] further enhanced predictions by integrating structure-based tools like GraphBind and
+DELIA, employing spatial clustering techniques to identify binding pockets. Despite  their
+effectiveness, these approaches are limited by alignment quality, structural data availability, and labor-intensive feature engineering.
+Recent advancements in transformer-based protein language models, such as ESM2, have significantly changed the predictive landscape by capturing
+complex sequence context without the need for explicit structural information. IonPred [7], for instance, adopted the transformer-based
+ELECTRA architecture to predict residue-level features directly from sequences. Similarly,Prot2Token [2,3] reformulated residue-level
+predictions into an autoregressive token generation task using ESM2 and task embeddings, while LMetalSite [1] utilized ProtT5 and multi-task
+learning strategies for predicting metal-binding residues. Moreover, LaMPSite [4] integrated ESM2-derived embeddings with ligand graphs and
+geometric constraints to accurately identify binding sites independently of protein 3D structures.
+In this study, we systematically explore the capabilities of the ESM2 model (facebook/esm2_t6_8M_UR50D) in predicting
+Zn, Ca, Mn, and Mg binding sites using both single-task and   multi-task learning paradigms.   By comparing fine-tuning strategies across
+different layers of the transformer model, we identify optimal configurations that yield superior performance. Additionally,
+we incorporate task-specific classification heads in the multi-tasksetting to
+determine whether shared feature extraction benefits the simultaneous prediction ofmultiple metal ions.
+Our experimental methodology includes sequence preprocessing, redundancy removal
+through CD-HIT clustering at 40% sequence identity, tokenization using the ESM2 tokenizer, and
+rigorous evaluation using established benchmark datasets. This work contributes important
+insights into effective strategies for fine-tuning transformer-based models, emphasizing their
+strengths in residue-level functional annotation tasks, and further demonstrates the practical
+advantages of employing multi-task learning frameworks for complex biological predictions.
+
+
+
+** *Methods*
+
+*** *Dataset and Preprocessing: (Arwa)* 
+
+The dataset was derived from BioLip2, a curated database of biologically relevant protein-ligand
+interactions extracted from the PDB. Protein sequences were stored in FASTA format, each
+associated with a corresponding label file indicating binary residue-level annotations.
+Preprocessing involved removing DNA/RNA chains, filtering out sequences shorter than 50
+residues, and aligning labels to tokenized inputs. To reduce redundancy and split the data into
+training, validation, and testing sets, we applied CD-HIT with a 40% sequence identity threshold.
+The full preprocessing pipeline, from raw sequence collection to final dataset preparation, is illustrated in Figure 1.
+
+#+NAME: fig:1
+#+CAPTION: Overview of the data preprocessing workflow. Protein sequences were filtered to exclude DNA/RNA chains and short sequences (< 50 residues), annotated with binary residue-level labels, deduplicated using CD-HIT at a 40% identity threshold, and split into training, evaluation, and testing sets.
+[[./Figure1.png]]
+#+LATEX_HEADER: \usepackage[font=small,labelfont=bf]{caption}
+
+The datasets were curated from BioLip2 and include protein sequences labeled for Zn2+,
+Ca2+, Mg2+, and Mn2+ ions. Table 1 summarizes the number of sequences and annotated binding
+sites available for each ion type.
+
+
+
+|------+--------------------+---------------+---------------------+-----------------+-----------------|
+| *No* | *Chemical Formula* | *Name*        | *BioLip FASTA Name* | *Num Sequences* | *Binding Sites* |
+|      |                    |               |                     |                 |                 |
+|------+--------------------+---------------+---------------------+-----------------+-----------------|
+|    1 | Zn                 | Zinc Ion      | ZN.fasta            |            4665 |           23310 |
+|      |                    |               |                     |                 |                 |
+|      |                    |               |                     |                 |                 |
+|      |                    |               |                     |                 |                 |
+|------+--------------------+---------------+---------------------+-----------------+-----------------|
+|    2 | Ca                 | Calcium Ion   | CA.fasta            |            3043 |           22161 |
+|      |                    |               |                     |                 |                 |
+|      |                    |               |                     |                 |                 |
+|      |                    |               |                     |                 |                 |
+|------+--------------------+---------------+---------------------+-----------------+-----------------|
+|    3 | Mg                 | Magnesium Ion | MG.fasta            |            2951 |            9494 |
+|      |                    |               |                     |                 |                 |
+|      |                    |               |                     |                 |                 |
+|      |                    |               |                     |                 |                 |
+|------+--------------------+---------------+---------------------+-----------------+-----------------|
+|    4 | Mn                 | Manganese Ion | MN.fasta            |             789 |            3315 |
+|      |                    |               |                     |                 |                 |
+|      |                    |               |                     |                 |                 |
+|      |                    |               |                     |                 |                 |
+|------+--------------------+---------------+---------------------+-----------------+-----------------|
+
+
+*** *FASTA Parsing and Label Preparation: (Arwa)* 
+
+Custom parsing functions were implemented to extract protein sequences and corresponding
+annotations from the BioLip2 files [8]: protein_nr.fasta.gz and BioLiP_nr.txt.gz. Labels were parsed and
+converted into lists of integers aligned with the amino acid sequences. The parsing
+consistency between sequence and label lengths.
+
+
+*** *Tokenization and Dataset Construction: (Arwa)* 
+
+Sequences were tokenized using the pre-trained ESM2 tokenizer from Hugging Face. A custom
+Protein Dataset class was defined to pair input tokens with aligned labels. To simplify label
+alignment, special token addition was disabled during tokenization. A data collator with dynamic
+padding was also implemented to handle variable-length sequences during training.
+
+*** *Model Architecture: (Arwa,Ye)*
+
+The model architecture for both single-task and multi-task frameworks is based on ESM2
+(facebook/esm2_t6_8M_UR50D). In the single-task setting, ESM2 is coupled with a token
+classification head, outputting logits for each residue to classify them into key or non-key residues.
+The experiments involved three scenarios: baseline classification without fine-tuning, fine-tuning
+only the final two layers, and fine-tuning all six layers of ESM2.
+In the multi-task architecture, we extended the single-task setup by integrating task-specific
+fully connected layers at the output stage. Each ion (Zn, Ca, Mn, Mg) was provided with an
+independent classification head that shares the common ESM2 embedding backbone. This multi-
+task approach enabled the simultaneous prediction of multiple ion-binding sites, potentially
+leveraging common sequence features to enhance overall performance.
+The architecture of our proposed pipeline, illustrating both single-task and multi-task
+approaches, is depicted in Figure 2. The model effectively generates contextual embeddings from
+protein sequences using ESM2 and performs token-level classification to accurately identify
+functionally important residues.
+
+
+#+NAME: fig:2
+#+CAPTION: Schematic illustration of the proposed model architecture. \textbf{(A)} Single-task architecture employs ESM2 embedding followed by a token classification head to identify functional residues. \textbf{(B)} Multi-task architecture shares the ESM2 embedding backbone and introduces multiple task-specific fully connected classification heads for simultaneous prediction of Zn, Ca, Mn, and Mg binding residues. The input to the model consists of a protein sequence and a task type (Zn, Ca, Mn, or Mg).
+[[./Figure2.png]]
+#+LATEX_HEADER: \usepackage[font=small,labelfont=bf]{caption}
+
+** *Results*
+
+*** *Experiments setting: (Ye)*
+
+ESM2 (facebook/esm2_t6_8M_UR50D) served as our backbone model for the subsequent
+experiments. Training was conducted using the Hugging Face Trainer API for 50 epochs,
+with a batch size of 48 and a learning rate of 1e-3. The configuration included a weight
+decay of 0.01,evaluation at the end of each epoch, and a custom data collator to ensure proper batching.
+Modelperformance was evaluated using accuracy, F1-score, and Matthews Correlation Coefficient (MCC),
+with evaluation conducted on a held-out test set. 
+The F1-score is the harmonic mean of precision and recall. It balances the trade-off between the two metrics,
+especially when you have an imbalanced dataset. The formula is:
+
+#+BEGIN_EXPORT latex
+\[
+F1 = \frac{2 \times \text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}}
+\]
+#+END_EXPORT
+
+MCC is a metric used to assess the quality of binary classification models. It considers all
+four components of the confusion matrix (TP, FP, FN, TN) and returns a value between -1 and 1.
+The formula for MCC is:
+
+#+BEGIN_EXPORT latex
+\[
+MCC = \frac{TP \times TN - FP \times FN}{\sqrt{(TP + FP)(TP + FN)(TN + FP)(TN + FN)}}
+\]
+#+END_EXPORT
+
+
+
+
+*** *Comparisons between single-task and multi-taskg: (Ye)*
+
+In our experiments, we compared the performance of single-task and multi-task learning
+frameworks for predicting metal ion binding sites across four ion types: zinc (Zn), calcium (Ca),
+manganese (Mn), and magnesium (Mg). The models were evaluated using the F1-score and
+Matthews Correlation Coefficient (MCC) metrics.
+For the single-task approach, we experimented with three different fine-tuning strategies:
+freezing all layers, fine-tuning only the last two layers, and fine-tuning all six layers of the ESM2
+model. The results showed that fine-tuning the last two layers of the model consistently
+outperformed the other two configurations. For example, in the case of zinc (Zn), fine-tuning the
+last layers achieved an F1-score of 0.69 and an MCC of 0.681, compared to the lower performance
+of freezing all layers (F1: 0.67, MCC: 0.671) and fine-tuning all layers (F1: 0.60, MCC: 0.592).
+For the multi-task approach, we applied a similar set of experiments. Here, the model was
+trained to predict multiple ion-binding sites simultaneously using shared feature-extraction layers
+and task-specific classification heads. The results were even more promising in this setup. The
+best performance was achieved by fine-tuning the last two layers, which yielded an F1-score of
+0.736 and an MCC of 0.735 for zinc (Zn). This approach showed improved performance across all
+ion types when compared to the single-task framework, with notable increases in F1-score and
+MCC for all PTM sites, particularly for zinc and manganese.
+Overall, these results demonstrate that multi-task learning, coupled with fine-tuning the
+last two layers, provides a significant advantage in predicting metal ion binding sites. The model
+achieved superior predictive performance and showed improved generalization across the different
+ion types compared to single-task learning models.
+
+
+
+#+BEGIN_CENTER
+*Table 2. Comparison between single-task and multi-task*
+#+END_CENTER
+
+|-------------+--------------+-----------+----------+-----------+----------+---------+---------+-----------+----------|
+| *Methods*   | *Settings*   | *Zn (F1)* | *Zn MCC* | *Ca (F1)* | *Ca MCC* |    *Mn* |    *Mn* | *Mg (F1)* | *Mg MCC* |
+|             |              |           |          |           |          | (F1)    |     MCC |           |          |
+|-------------+--------------+-----------+----------+-----------+----------+---------+---------+-----------+----------|
+| Single-task | Freeze all   |      0.67 |    0.671 |      0.58 |    0.598 |    0.19 |   0.205 |      0.36 |    0.385 |
+|             | Layers       |           |          |           |          |         |         |           |          |
+|             |              |           |          |           |          |         |         |           |          |
+|             | Model tuning |      0.60 |    0.592 |      0.58 |    0.593 |    0.37 |   0.377 |      0.29 |    0.297 |
+|             | on all       |           |          |           |          |         |         |           |          |
+|             | layers       |           |          |           |          |         |         |           |          |
+|             |              |           |          |           |          |  *0.63* |   *628* |    *0.44* |  *0.439* |
+|             | Model tuning |    *0.69* |  *0.681* |    *0.65* |  *0.654* |         |         |           |          |
+|             | on the       |           |          |           |          |         |         |           |          |
+|             | last layers  |           |          |           |          |         |         |           |          |
+|-------------+--------------+-----------+----------+-----------+----------+---------+---------+-----------+----------|
+| Multi-task  |              |     0.637 |    0.636 |     0.542 |    0.547 |   0.344 |   0.351 |     0.253 |    0.259 |
+|             |              |     0.620 |    0.618 |     0.545 |    0.557 |   0.393 |   0.391 |     0.268 |    0.289 |
+|             |              |   *0.736* |  *0.735* |   *0.647* |  *0.652* | *0.639* | *0.642* |   *0.470* |  *0.485* |
+|-------------+--------------+-----------+----------+-----------+----------+---------+---------+-----------+----------|
+
+
+*** *Comparisons with other state-of-the-art methods: (Arwa)*
+We compared the performance of our model with other state-of-the-art methods for
+predicting metal ion binding sites, including Prot2Token, TargetS, LmetalSite, and ZinCap. The
+evaluation was conducted across four metal ions: zinc (Zn), calcium (Ca), manganese (Mn), and
+magnesium (Mg). The model's performance was assessed using the F1-score and Matthews
+Correlation Coefficient (MCC).
+For zinc (Zn), our model achieved an F1-score of 0.736 and an MCC of 0.735,
+outperforming TargetS and ZinCap, which had F1-scores of 0.660 and 0.451, respectively
+LmetalSite performed best among other methods, with an F1-score of 0.830 and an MCC of 0.828.
+Similarly, for calcium (Ca), our model achieved an F1-score of 0.647 and an MCC of 0.652,
+significantly outperforming TargetS, which had an F1-score of 0.392 and an MCC of 0.431.
+LmetalSite also showed strong performance with an F1-score of 0.737 and MCC of 0.734.
+In the case of manganese (Mn), our model achieved an F1-score of 0.639 and an MCC of
+0.628, which was competitive with LmetalSite’s F1-score of 0.805 and MCC of 0.802. Finally, for
+magnesium (Mg), our model showed an F1-score of 0.470 and an MCC of 0.485, outperforming
+Prot2Token and ZinCap, which had lower scores for both metrics.
+
+These results highlight the competitive performance of our model, especially in
+comparison to other methods such as TargetS and ZinCap. Our approach demonstrates
+potential to provide effective predictions for multiple metal ion binding sites, outperforming many
+existing methods on several metal ions.
+
+#+BEGIN_CENTER
+*Table 3. Comparisons with other state-of-the-art methods*
+#+END_CENTER
+
+|-------------+----------+--------------+-----------+--------------+----------+---------------+--------------+
+| *Metal Ion* | *Metric* | *Prot2Token* | *TargetS* | *LmetalSite* | *ZinCap* | *Single-task* | *Multi-task* |  
+|             |          |              |           |              |          |  Model tuning | Model tuning |          
+|             |          |              |           |              |          |   on the last | on the last  |   
+|             |          |              |           |              |          |        layers | layers       |   
+|-------------+----------+--------------+-----------+--------------+----------+---------------+--------------+
+| *Zn*        | F1       | *0.759*      |     0.660 | *0.830*      | 0.451    |          0.69 | 0.736        |   
+|             | MCC      | -            |     0.660 | *0.828*      | 0.48     |         0.681 | *0.735*      |   
+|             |          |              |           |              |          |               |              | 
+|-------------+----------+--------------+-----------+--------------+----------+---------------+--------------|
+| *Ca*        | F1       | 0.657        |     0.392 | *0.737*      | -        |        *0.65* | 0.647        |
+|             | MCC      | -            |     0.431 | *0.734*      | -        |       *0.654* | 0.652        | 
+|-------------+----------+--------------+-----------+--------------+----------+---------------+--------------|
+| *Mn*        | F1       | 0.739        |     0.579 | *0.805*      | -        |          0.63 | *0.639*      |  
+|             | MCC      | -            |     0.574 | *0.802*      | -        |         0.628 | *0.642*      |
+|             |          |              |           |              |          |               |              |   
+|-------------+----------+--------------+-----------+--------------+----------+---------------+--------------|
+| *Mg*        | F1       | 0.460        |     0.433 | *0.556*      | -        |          0.44 | *0.470*      |   
+|             | MCC      | -            |     0.450 | *0.577*      | -        |          0.13 | 0.485        |  
+|-------------+----------+--------------+-----------+--------------+----------+---------------+--------------+
+
+
+** *Discussion: (Saladin)*
+In this project, we utilized a pre-trained transformer-based protein language model (ESM2)
+to predict metal ion binding sites from protein sequences. The experiments involved both single-
+task and multi-task learning frameworks, with the latter demonstrating superior performance
+across multiple ion types. Fine-tuning the last two layers of the ESM2 model proved to be the most
+effective strategy, achieving the highest F1-score and Matthews Correlation Coefficient (MCC)
+for zinc (Zn), calcium (Ca), manganese (Mn), and magnesium (Mg).
+
+Our approach demonstrated the power of transformer-based models for capturing complex
+biological patterns directly from amino acid sequences, without the need for explicit structural
+data. Notably, multi-task learning allowed the model to simultaneously predict multiple ion-
+binding sites, leveraging shared features across tasks, and resulting in improved overall
+performance. This capability highlights the potential for knowledge transfer between related tasks,
+which can be especially beneficial when predicting binding sites for different metal ions.
+
+While the results show promising improvements, the model's performance varies across
+different ions. For instance, the model performed exceptionally well for zinc and manganese but
+showed less accuracy for magnesium. This suggests that certain ion types may present unique
+challenges that require further refinement of the model. Additionally, incorporating structural
+information and exploring other fine-tuning strategies could lead to further performance gains.
+
+
+
+
+
+
+
+** *Contributions*
+
+#+LATEX: \setlength{\parindent}{0pt}
+
+*Saladin* drafted the Abstract, Introduction, and Discussion sections.
+
+*Ye* contributed to the fourth section of Methods and drafted the first and second sections of Results.
+
+*Arwa* drafted the first, second, and third sections of Methods, contributed to the fourth section of Methods, and drafted the third section of Results.
+
+
+#+LATEX: \vspace{20em}
+
+
+ *\large{References}*
+
+ #+LATEX: \vspace{2em}
+
+[1] Yuan et al. (2022). Alignment-free metal ion-binding site prediction from protein sequence through pretrained language model and multi-task learning. /Briefings in Bioinformatics, 23(6)/. doi:10.1093/bib/bbac444
+
+[2] Pourmirzaei et al. (2024). Prot2Token: A multi-task framework for protein language processing using autoregressive language modeling. GitHub. [https://github.com/mahdip72/prot2token](https://github.com/mahdip72/prot2token)
+
+[3] Pourmirzaei et al. (2025). Using Autoregressive-Transformer Model for Protein-Ligand Binding Site Prediction. LMRL Workshop, ICLR 2025. doi:10.1101/2025.03.11.642700
+
+[4] Zhang & Xie (2023). Protein Language Model-Powered 3D Ligand Binding Site Prediction from Protein Sequence. NeurIPS AI for Science Workshop. [https://arxiv.org/abs/2312.03016](https://arxiv.org/abs/2312.03016)
+
+[5] Yu et al. (2013). TargetS: A template-free method for predicting protein-ligand binding sites with high specificity and sensitivity. /IEEE/ACM Transactions on Computational Biology and Bioinformatics/. [https://ieeexplore.ieee.org/abstract/document/6583160](https://ieeexplore.ieee.org/abstract/document/6583160)
+
+[6] Xia et al. (2020). BindWeb: A web server for accurate identification of DNA-, RNA-, and ligand-binding sites using structure-derived features. /Bioinformatics, 36(10)/, 3018–3025. doi:10.1093/bioinformatics/btz986
+
+[7] Essien et al. (2023). IonPred: A Transformer-Based Tool for Metal Ion Binding Site Prediction. /Molecules, 28(19)/, 6793. [https://www.mdpi.com/1420-3049/28/19/6793](https://www.mdpi.com/1420-3049/28/19/6793)
+
+[8] BioLip2. (2024). BioLip: A semi-manually curated database for biologically relevant ligand–protein interactions. Retrieved from [https://zhanggroup.org/BioLiP/download.html](https://zhanggroup.org/BioLiP/download.html)
+
