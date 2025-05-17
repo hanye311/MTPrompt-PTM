@@ -70,7 +70,7 @@ def main(args, dict_config):
     for i, (task_name, dataloader) in enumerate(dataloaders_dict['test'].items()):
         net.eval()
         start_time = time()
-        prediction_results,  prot_id_results,position_results = predict(dataloader, net)
+        prediction_results,  prot_id_results,position_results = predict(dataloader, net.to(device))
         result_dic = {
             "prot_id": prot_id_results,
             "position":position_results,
