@@ -11,11 +11,11 @@ The PTM sites includes Phosphorylation (S, T, Y), N-linked Glycosylation (N), O-
 
 To use MTPrompt-PTM project, install the corresponding <code>environment.yaml</code> file in your environment. Or you can follow the <code>install.sh</code> file to install the dependencies.
 
-<h3>Install using yaml file</h3>
+<h3>Install using yml file</h3>
 
-Using <code>environment.yaml</code>
+Using <code>environment.yml</code>
 
-1. Create a new environment using the environment.yaml file: <code>conda env create -f environment.yaml</code>.
+1. Create a new environment using the environment.yml file: <code>conda env create -f environment.yml</code>.
 2. Activate the environment you have just created: <code>conda activate mtprompt</code>.
 
 <h3>Install using SH file</h3>
