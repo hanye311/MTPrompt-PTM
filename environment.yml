@@ -1,0 +1,25 @@
+name: MTPrompt-PTM
+channels:
+  - defaults
+dependencies:
+  - libstdcxx-ng==11.2.0=h1234567_1
+  - libgomp==11.2.0=h1234567_1
+  - ld_impl_linux-64==2.38=h1181459_1
+  - zlib==1.2.13=h5eee18b_1
+  - readline==8.2=h5eee18b_0
+  - xz==5.4.6=h5eee18b_1
+  - python==3.11.0=h7a1cb2a_3
+  - _openmp_mutex==5.1=1_gnu
+  - bzip2==1.0.8=h5eee18b_6
+  - libgcc-ng==11.2.0=h1234567_1
+  - ca-certificates==2024.7.2=h06a4308_0
+  - openssl==1.1.1w=h7f8727e_0
+  - pip
+  - cd-hit==4.8.1=h2e03b76_5
+  - libuuid==1.41.5=h5eee18b_0
+  - libffi==3.4.4=h6a678d5_1
+  - _libgcc_mutex==0.1=main
+  - tk==8.6.14=h39e8969_0
+  - ncurses==6.4=h6a678d5_0
+  - sqlite==3.45.3=h5eee18b_0
+
