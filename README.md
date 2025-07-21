@@ -18,17 +18,12 @@ Using <code>environment.yml</code>
 1. Create a new environment using the environment.yml file: <code>conda env create -f environment.yml</code>.
 2. Activate the environment you have just created: <code>conda activate mtprompt</code>.
 
-<h3>Install using SH file</h3>
+<h3>Install using requirement file</h3>
 
-Create a conda environment and use this command to install the required packages inside the conda environment. First, make the <code>install.sh</code> file executable by running the following command:
-
-```bash
-chmod +x install.sh
-```
-Then, run the following command to install the required packages inside the conda environment:
+First create (and activate) a clean virtual environment, then point pip at your requirements.txt
 
 ```bash
-bash install.sh
+pip install -r requirements.txt
 ```
 
 <h2>Inference</h2>
