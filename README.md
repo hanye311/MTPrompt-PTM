@@ -28,8 +28,10 @@ pip install -r requirements.txt
 ```
 
 <h3>Using Docker</h3>
+
+```bash
 docker run --rm --name mtprompt -v "$(pwd)":/app/data hanye0311/mtprompt:v1 python3 test.py --data_path /app/data/ace_positions.fasta --PTM_type Acetylation_K
-<img width="1496" height="45" alt="image" src="https://github.com/user-attachments/assets/b9091aba-8763-4d83-90e7-da07fbb319ed" />
+```
 
 
 <h2>Inference</h2>
