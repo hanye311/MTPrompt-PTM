@@ -23,6 +23,7 @@ Using <code>environment.yml</code>
 First create (and activate) a clean virtual environment, then point pip at your requirements.txt
 
 ```bash
+python3 -m venv venv
 pip install -r requirements.txt
 ```
 
