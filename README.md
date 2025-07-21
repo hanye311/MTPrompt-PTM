@@ -9,7 +9,7 @@ The PTM sites includes Phosphorylation (S, T, Y), N-linked Glycosylation (N), O-
 
 <h2>Installation</h2>
 
-To use MTPrompt-PTM project, install the corresponding <code>environment.yaml</code> file in your environment. Or you can follow the <code>install.sh</code> file to install the dependencies.
+To use MTPrompt-PTM project, install the corresponding <code>environment.yml</code> file in your environment. Or you can follow the <code>requirements.txt</code> file to install the dependencies.
 
 <h3>Install using yml file</h3>
 
@@ -26,6 +26,11 @@ First create (and activate) a clean virtual environment, then point pip at you
 python3 -m venv venv
 pip install -r requirements.txt
 ```
+
+<h3>Using Docker</h3>
+docker run --rm --name mtprompt -v "$(pwd)":/app/data hanye0311/mtprompt:v1 python3 test.py --data_path /app/data/ace_positions.fasta --PTM_type Acetylation_K
+<img width="1496" height="45" alt="image" src="https://github.com/user-attachments/assets/b9091aba-8763-4d83-90e7-da07fbb319ed" />
+
 
 <h2>Inference</h2>
 
