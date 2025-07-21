@@ -27,13 +27,6 @@ python3 -m venv venv
 pip install -r requirements.txt
 ```
 
-<h3>Using Docker</h3>
-
-```bash
-docker run --rm --name mtprompt -v "$(pwd)":/app/data hanye0311/mtprompt:v1 python3 test.py --data_path /app/data/ace_positions.fasta --PTM_type Acetylation_K
-```
-
-
 <h2>Inference</h2>
 
 To predict PTM sites using our model, you need to provide the PTM type and the corresponding protein sequence.
@@ -49,4 +42,11 @@ The result will be saved in a csv file.
 
 ```bash
 python test.py --config_path config/PTM_config_prompt_tuning_test.yaml --model_path best_model_13ptm_final.pth --data_path data/Phosphorylation_S_sequence.fasta --PTM_type Phosphorylation_S --save_path data
+```
+
+
+<h3>Using Docker</h3>
+
+```bash
+docker run --rm --name mtprompt -v "$(pwd)":/app/data hanye0311/mtprompt:v1 python3 test.py --data_path /app/data/ace_positions.fasta --PTM_type Acetylation_K
 ```
