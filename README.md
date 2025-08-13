@@ -48,5 +48,9 @@ python test.py --config_path config/PTM_config_prompt_tuning_test.yaml --model_p
 <h3>Using Docker</h3>
 
 ```bash
-docker run --rm --name mtprompt -v "$(pwd)":/app/data hanye0311/mtprompt:v1 python3 test.py --data_path /app/data/ace_positions.fasta --PTM_type Acetylation_K
+docker run --rm --name mtprompt -v "$(pwd)":/app/data hanye0311/mtprompt:v1 python3 test.py --data_path /app/data/Phosphorylation_S_sequence.fasta --PTM_type Phosphorylation_S
 ```
+
+<h3>Dataset</h3>
+
+The dataset for training, validation and testing dataset can be downloaded from: [Dataset](https://drive.google.com/drive/folders/14Cw81Fua7Gcb76dkrfxySF9hldPSZRqx?usp=drive_link).
