@@ -53,4 +53,4 @@ docker run --rm --name mtprompt -v "$(pwd)":/app/data hanye0311/mtprompt:v1 pyth
 
 <h3>Dataset</h3>
 
-The dataset for training, validation and testing dataset can be downloaded from: [Dataset](https://drive.google.com/drive/folders/14Cw81Fua7Gcb76dkrfxySF9hldPSZRqx?usp=drive_link).
+The dataset for training, validation and testing can be downloaded from: [Dataset](https://drive.google.com/drive/folders/14Cw81Fua7Gcb76dkrfxySF9hldPSZRqx?usp=drive_link).
