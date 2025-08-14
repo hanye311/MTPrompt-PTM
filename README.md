@@ -57,4 +57,4 @@ The dataset for training, validation and testing can be downloaded from: [Datase
 
 <h3>Citation</h3>
 
-Please cite the following paper for using MusiteDeep: [Han, Y.; He, F.; Shao, Q.; Wang, D.; Xu, D. MTPrompt-PTM: A Multi-Task Method for Post-Translational Modification Prediction Using Prompt Tuning on a Structure-Aware Protein Language Model. Biomolecules 2025, 15, 843. https://doi.org/10.3390/biom15060843](https://www.mdpi.com/2218-273X/15/6/843).
+Please cite the following paper for using MTPrompt-PTM: [Han, Y.; He, F.; Shao, Q.; Wang, D.; Xu, D. MTPrompt-PTM: A Multi-Task Method for Post-Translational Modification Prediction Using Prompt Tuning on a Structure-Aware Protein Language Model. Biomolecules 2025, 15, 843. https://doi.org/10.3390/biom15060843](https://www.mdpi.com/2218-273X/15/6/843).
