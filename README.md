@@ -54,3 +54,7 @@ docker run --rm --name mtprompt -v "$(pwd)":/app/data hanye0311/mtprompt:v1 pyth
 <h3>Dataset</h3>
 
 The dataset for training, validation and testing can be downloaded from: [Dataset](https://drive.google.com/drive/folders/14Cw81Fua7Gcb76dkrfxySF9hldPSZRqx?usp=drive_link).
+
+<h3>Citation</h3>
+
+Please cite the following paper for using MusiteDeep: [Han, Y.; He, F.; Shao, Q.; Wang, D.; Xu, D. MTPrompt-PTM: A Multi-Task Method for Post-Translational Modification Prediction Using Prompt Tuning on a Structure-Aware Protein Language Model. Biomolecules 2025, 15, 843. https://doi.org/10.3390/biom15060843](https://www.mdpi.com/2218-273X/15/6/843).
