@@ -44,6 +44,9 @@ The result will be saved in a csv file.
 python test.py --config_path config/PTM_config_prompt_tuning_test.yaml --model_path best_model_13ptm_final.pth --data_path data/Phosphorylation_S_sequence.fasta --PTM_type Phosphorylation_S --save_path data
 ```
 
+<h3>Using Colab</h3>
+
+[Colab_MTPrompt_PTM](https://colab.research.google.com/drive/1knnx38_3JqiGko2-had2pyWxebRQKfzw?usp=sharing).
 
 <h3>Using Docker</h3>
 
