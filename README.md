@@ -46,6 +46,7 @@ python test.py --config_path config/PTM_config_prompt_tuning_test.yaml --model_p
 
 <h3>Using Colab</h3>
 
+You can choose to run our program on Google Colab, which provides a ready-to-use Python environment and also supports GPU acceleration for faster computation. To make it easier for users, we have built an interactive interface that allows you to input your data and view the output results directly, without needing to manage complex command-line operations.
 [Colab_MTPrompt_PTM](https://colab.research.google.com/drive/1knnx38_3JqiGko2-had2pyWxebRQKfzw?usp=sharing).
 
 <h3>Using Docker</h3>
