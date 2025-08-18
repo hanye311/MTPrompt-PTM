@@ -63,7 +63,7 @@ def main(args, dict_config):
     torch.cuda.empty_cache()
     dataloaders_dict = prepare_dataloaders_ptm(args,configs)
     net = prepare_models_secondary_structure_ptm(configs)
-    model_checkpoint = torch.load(args.model_path, map_location='cpu')
+    model_checkpoint = torch.load(args.model_path, map_location=device, weights_only=False)
 
     net.load_state_dict(model_checkpoint['model_state_dict'])
 
@@ -100,3 +100,4 @@ if __name__ == '__main__':
         config_file = yaml.full_load(file)
 
     main(args, config_file)
+
